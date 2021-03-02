@@ -12,7 +12,20 @@ public class PidController
         this.dFactor = dFactor; // (derivative) weighting of the rate of change of error - anticipates error and reduces overshoot caused by P. Higher D factor dampens the response to prevent oscillations.
     }
 
-    public float Update(float target, float actual, float timeDelta)
+    // public float Update(float target, float actual, float timeDelta)
+    // {
+    //     float error = target - actual;
+    //     integral += error * timeDelta;
+    //     float derivative = (error - lastError) / timeDelta;
+    //     lastError = error;
+
+    //     return
+    //         error * pFactor
+    //         + integral * iFactor
+    //         + derivative * dFactor;
+    // }
+
+    public float LiveTuneUpdate(float target, float actual, float timeDelta, float p, float i, float d)
     {
         float error = target - actual;
         integral += error * timeDelta;
@@ -20,8 +33,8 @@ public class PidController
         lastError = error;
 
         return
-            error * pFactor
-            + integral * iFactor
-            + derivative * dFactor;
+            p * error +
+            i * integral +
+            d * derivative;
     }
 }
