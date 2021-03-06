@@ -1,3 +1,5 @@
+using UnityEngine;
+
 [System.Serializable]
 public class PidController
 {
@@ -36,5 +38,21 @@ public class PidController
             p * error +
             i * integral +
             d * derivative;
+    }
+}
+
+public class Vector3PidController
+{
+    PidController pidControllerX = new PidController();
+    PidController pidControllerY = new PidController();
+    PidController pidControllerZ = new PidController();
+
+    public Vector3 Update(Vector3 target, Vector3 actual, float timeDelta, float p, float i, float d)
+    {
+        return new Vector3(
+            pidControllerX.LiveTuneUpdate(target.x, actual.x, Time.fixedDeltaTime, p, i, d),
+            pidControllerY.LiveTuneUpdate(target.y, actual.y, Time.fixedDeltaTime, p, i, d),
+            pidControllerZ.LiveTuneUpdate(target.z, actual.z, Time.fixedDeltaTime, p, i, d)
+        );
     }
 }
