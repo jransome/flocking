@@ -1,6 +1,6 @@
 # Flocking
 
-Flocking with starships
+Flocking with starships in the Unity game engine
 
 Powered by [Reynold's steering behaviours](https://www.red3d.com/cwr/boids/)
 
