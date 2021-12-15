@@ -105,6 +105,11 @@ public class Steering : MonoBehaviour
     Vector3 NormaliseAndShit(Vector3 steering)
     {
         Vector3 steeringForce = steering.normalized * maxSpeed - Velocity;
-        return Vector3.ClampMagnitude(steeringForce, maxSteerForce);
+        Vector3 clamped = Vector3.ClampMagnitude(steeringForce, maxSteerForce);
+        return new Vector3(
+            clamped.x,
+            Mathf.Clamp(clamped.y, -2, 2),
+            clamped.z
+        );
     }
 }
