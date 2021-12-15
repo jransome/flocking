@@ -66,7 +66,7 @@ public class Steering : MonoBehaviour
                     return sum;
                 }
             );
-            Vector3 obstacleSteering = NormaliseAndShit(obstacleAvoidanceSum / nearByObstaclePoints.Count) * obstacleAvoidanceFactor;
+            Vector3 obstacleSteering = Normalise(obstacleAvoidanceSum / nearByObstaclePoints.Count) * obstacleAvoidanceFactor;
             Debug.DrawRay(rb.position, obstacleSteering, Color.red);
             desiredSteering += obstacleSteering;
         }
@@ -95,14 +95,14 @@ public class Steering : MonoBehaviour
         {
             Vector3 finalForce = Vector3.zero;
             int totalAgents = nearbyAgents.Count;
-            finalForce += NormaliseAndShit(steeringForces[0] / totalAgents) * alignmentFactor;
-            finalForce += NormaliseAndShit((steeringForces[1] / totalAgents) - Position) * cohesionFactor;
-            finalForce += NormaliseAndShit(steeringForces[2] / totalAgents) * separationFactor;
+            finalForce += Normalise(steeringForces[0] / totalAgents) * alignmentFactor;
+            finalForce += Normalise((steeringForces[1] / totalAgents) - Position) * cohesionFactor;
+            finalForce += Normalise(steeringForces[2] / totalAgents) * separationFactor;
             return finalForce;
         }
     );
 
-    Vector3 NormaliseAndShit(Vector3 steering)
+    Vector3 Normalise(Vector3 steering)
     {
         Vector3 steeringForce = steering.normalized * maxSpeed - Velocity;
         Vector3 clamped = Vector3.ClampMagnitude(steeringForce, maxSteerForce);
